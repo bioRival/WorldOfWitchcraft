@@ -1,0 +1,71 @@
+{% extends 'default.html' %}
+
+{% load static %}
+{% load custom_tags %}
+
+{% block title %}
+World of Witchcraft - {{ post_page.title }}
+{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <p class="post-meta">
+            Создано: <a href="#">{{ post_page.author.user.username }}</a>
+            {{ post_page.publication_date|date:'d.m.Y' }}
+            </p>
+            <!-- Two buttons "Edit" and "Delete" -->
+            {% if post_page.author.user == request.user %}
+                <button onclick="location.href='http://127.0.0.1:8000/post/{{ post_page.pk }}/edit';"
+                        type="button" class="btn btn-outline-secondary">
+                    Изменить
+                </button>
+
+                <button onclick="location.href='http://127.0.0.1:8000/post/{{ post_page.pk }}/delete';"
+                        type="button" class="btn btn-outline-secondary">
+                    Удалить
+                </button>
+            {% endif %}
+            <div class="heading-section mb-5">
+                <h4><em>{{ post_page.title }}</em></h4>
+            </div>
+            {{ post_page.content|safe }}
+            <hr>
+            <br/><br/><br/><br/>
+            <div class="featured-games">
+                <h4>ОТКЛИКИ:</h4><br/>
+                {% if user.is_authenticated %}
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {{ form }}
+                        <input type="submit" value="Отправить" class="btn btn-secondary my-3" />
+                    </form>
+                {% endif %}
+                <p>
+                {% if post_page.replies.all %}
+                    {% for reply in post_page.replies.all|dictsortreversed:'publication_date'|dictsortreversed:'is_accepted' %}
+                        {% if reply.is_accepted %}
+                          <i class="fa fa-star"></i>
+                        {% endif %}
+                        <strong>{{ reply.user.username|upper }}</strong>
+                        <em>
+                            {{ reply.publication_date|date:'d.m.Y' }}
+                            {{ reply.publication_date|time:'H:i' }}
+                        </em>
+                        <br/>
+                        {{ reply.content }}
+                        <br/><br/>
+                    {% endfor %}
+                {% else %}
+                    <strong style="font-size: 20px">У этого объявления еще нет откликов :(</strong>
+                {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

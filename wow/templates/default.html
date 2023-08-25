@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    {% load static %}
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>{% block title %}{% endblock title %}</title>
+      <link rel="icon" type="image/x-icon" href="{% static 'cyborg-1.0.0/assets/images/favicon.png' %}">
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'cyborg-1.0.0/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{% static 'cyborg-1.0.0/assets/css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'cyborg-1.0.0/assets/css/templatemo-cyborg-gaming.css' %}">
+    <link rel="stylesheet" href="{% static 'cyborg-1.0.0/assets/css/owl.css' %}">
+    <link rel="stylesheet" href="{% static 'cyborg-1.0.0/assets/css/animate.css' %}">
+    <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+<!--
+
+TemplateMo 579 Cyborg Gaming
+
+https://templatemo.com/tm-579-cyborg-gaming
+
+-->
+  </head>
+
+<body>
+
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="{% url 'home' %}" class="logo">
+                        <img src="{% static 'cyborg-1.0.0/assets/images/logo.png' %}" alt="">
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+
+                        <li><a href="{% url 'home' %}" class="active">Главная</a></li>
+                        {% if user.is_superuser %}
+                            <li><a href="{% url 'send_email_to_every_user' %}">Отправить рассылку</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'post_list' %}">Объявления</a></li>
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'post_create' %}">Создать объявление</a></li>
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'logout' %}">Выйти</a></li>
+                            <li><a href="{% url 'profile' %}">Профиль <img src="{% static 'cyborg-1.0.0/assets/images/profile-header.jpg' %}" alt=""></a></li>
+                        {% else %}
+                            <li><a href="{% url 'login' %}">Войти <img src="{% static 'cyborg-1.0.0/assets/images/profile-header.jpg' %}" alt=""></a></li>
+                        {% endif %}
+                    </ul>
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="page-content">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-dark" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+            {% block content %} {% endblock content %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright © 2023 BioRival Inc. Все права защищены.
+
+          <br>Design: <a href="https://templatemo.com" target="_blank" title="free CSS templates">TemplateMo</a>  Distributed By <a href="https://themewagon.com" target="_blank" >ThemeWagon</a></p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Scripts -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'cyborg-1.0.0/vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'cyborg-1.0.0/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+
+  <script src="{% static 'cyborg-1.0.0/assets/js/isotope.min.js' %}"></script>
+  <script src="{% static 'cyborg-1.0.0/assets/js/owl-carousel.js' %}"></script>
+  <script src="{% static 'cyborg-1.0.0/assets/js/tabs.js' %}"></script>
+  <script src="{% static 'cyborg-1.0.0/assets/js/popup.js' %}"></script>
+  <script src="{% static 'cyborg-1.0.0/assets/js/custom.js' %}"></script>
+
+
+  </body>
+
+</html>

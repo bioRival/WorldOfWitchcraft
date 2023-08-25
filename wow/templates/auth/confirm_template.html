@@ -1,0 +1,12 @@
+{% block title %}
+    <title>Подтверждение Email</title>
+{% endblock title %}
+
+{% block content %}
+    {% if success %}
+        {{ user.username }}, ваш аккаунт был подтвержден! <br>
+        Проследуйте по <a href="{% url 'login' %}">ссылке</a> для входа в систему.
+    {% else %}
+        Ошибка, просреченный или неправильный токен!
+    {% endif %}
+{% endblock content %}

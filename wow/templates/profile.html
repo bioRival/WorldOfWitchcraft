@@ -1,0 +1,85 @@
+{% extends 'default.html' %}
+
+{% load static %}
+{% load custom_tags %}
+
+{% block title %}
+World of Witchcraft - Профиль
+{% endblock title %}
+
+{% block content %}
+
+  <!-- ***** Banner Start ***** -->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="main-profile ">
+        <div class="row">
+          <div class="col-lg-4">
+            <img src="{% static 'cyborg-1.0.0/assets/images/profile_mod.jpg' %}" alt="" style="border-radius: 23px;">
+          </div>
+          <div class="col-lg-4 align-self-center">
+            <div class="main-info header-text">
+              <span>Online</span>
+              <h4>{{ request.user.username|upper }}</h4>
+              <p>Здесь вы можете увидеть вашу статистику и управлять откликами на ваши объявления</p>
+              <div class="main-border-button">
+                <a href="#">Начать стрим</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 align-self-center">
+            <ul>
+              <li>Объявлений создано <span>3</span></li>
+              <li>Друзей онлайн <span>16</span></li>
+              <li>Оставлено откликов <span>None</span></li>
+              <li>Время на сайте (час) <span>29</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="clips">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="heading-section">
+                    <h4><em>Отклики На Ваши</em> Объявления</h4>
+                  </div>
+                </div>
+
+                <br/>
+                <a href="{% url 'profile' %}">Сорт по дате</a>
+                <a href="?order_by=post__title">Сорт по названию поста</a>
+                <br/><br/>
+
+                <div style="color:white">
+                  {% for reply in reply_list %}
+                    {% if reply.is_accepted %}
+                      <i class="fa fa-star"></i>
+                    {% endif %}
+                    <strong>{{ reply.user.username|upper }}</strong>
+                    <em style="color:gray">
+                        {{ reply.publication_date|date:'d.m.Y' }}
+                        {{ reply.publication_date|time:'H:i' }}
+                    </em>
+                    <small style="color:gray">[{{ reply.post.title|upper|truncatechars:30 }}]</small>
+                    {% if not reply.is_accepted %}
+                      <a href="{% url 'accept_reply' reply.pk %}"> Принять </a>
+                    {% endif %}
+                    <a href="http://127.0.0.1:8000/post/reply/{{ reply.pk }}/delete"> Удалить </a>
+                    <br/>
+                    {{ reply.content }}
+                    <br/><br/>
+                  {% empty %}
+                    Откликов на найдено...
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Banner End ***** -->
+
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends 'default.html' %}
+
+{% load static %}
+{% load custom_tags %}
+
+{% block title %}
+World of Witchcraft - Вход в Систему
+{% endblock title %}
+
+{% block content %}
+
+<div class="col-lg-4 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <h2> Войти в систему </h2>
+    <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+      <div class="form-group">
+        <label for="exampleInputEmail1"><p>Имя Пользователя</p></label>
+        <input type="text" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Email">
+        <small id="emailHelp" class="form-text text-muted">Ваш email не будет изестен никому, кроме вас</small>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1"><p>Пароль</p></label>
+        <input type="password" class="form-control" name="password" placeholder="Пароль">
+      </div>
+      <input type="submit" class="btn btn-secondary mt-2" value="Войти"/>
+    </form>
+    <button class="btn btn-secondary mt-2"> <a href="{% url 'register' %}"> Регистрация </a></button>
+</div>
+
+{% endblock content %}

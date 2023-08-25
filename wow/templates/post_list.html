@@ -1,0 +1,47 @@
+{% extends 'default.html' %}
+
+{% load static %}
+{% load custom_tags %}
+
+{% block title %}
+World of Witchcraft - Список Постов
+{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="heading-section">
+                <h4>NIGHTSHADE <em>ОБЪЯВЛЕНИЯ:</em> </h4>
+            </div>
+            <p>Всего найдено: {{ post_list.count }} объявлений</p>
+
+            {% for post in post_list %}
+                <div class="featured-games">
+                    <div class="post-preview">
+                        <a href="http://127.0.0.1:8000/post/{{ post.pk }}">
+                            <h2 class="post-title">
+                                {{ post.title }}
+                            </h2>
+                            <span>
+                                {{ post.content|truncatewords:20|erase_html }}
+                            </span>
+                        </a>
+                        <p class="post-meta">
+                            Опубликовано <a href="#">{{ post.author.user.username }}</a>
+                            {{ post.publication_date|date:'d.m.Y' }}
+                        </p>
+                    </div>
+                </div>
+                <hr>
+            {% empty %}
+                <h1>Объявлений пока нет!</h1>
+                <hr>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

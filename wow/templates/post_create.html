@@ -1,0 +1,33 @@
+{% extends 'default.html' %}
+
+{% load static %}
+
+{% block title %}
+World of Witchcraft - Создание поста
+{% endblock title %}
+
+{% block content %}
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+
+<div class="container">
+    <div class="header-text my-5">
+        <h2>Создание/Редактирование поста:</h2>
+    </div>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.media }}
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.errors }}
+                <div class="content">
+                    <label class="form-label mt-3" color="white" for="{{ field.auto_id }}"><h4>{{ field.label }}</h4></label>
+                </div>
+                {{ field }}
+            </div>
+        {% endfor %}
+        <input type="submit" value="Сохранить" class="btn btn-secondary my-5" />
+    </form>
+
+</div>
+{% endblock content %}

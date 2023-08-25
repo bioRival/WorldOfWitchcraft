@@ -1,0 +1,22 @@
+{% extends 'default.html' %}
+
+{% load static %}
+
+{% block title %}
+World of Witchcraft - Удаление поста
+{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <h2>Вы уверены что хотите удалить этот отклик?</h2>
+    <p>Отклик удалится безвозвратно</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        <p>Удалить отклик под названием "{{ object.content|truncatechars:30 }}"?</p>
+        <input type="submit" value="Удалить" class="btn btn-secondary my-5" />
+    </form>
+
+</div>
+
+{% endblock content %}

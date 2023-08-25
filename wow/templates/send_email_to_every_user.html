@@ -1,0 +1,34 @@
+{% extends 'default.html' %}
+
+{% load static %}
+
+{% block title %}
+World of Witchcraft - Новостная рассылка
+{% endblock title %}
+
+{% block content %}
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+
+<div class="container">
+    <div class="header-text my-5">
+        <h2>Отправка новостной рассылки:</h2>
+    </div>
+    <font style="color:#7f7f7f">Содержание будет отправлено всем зарегистрированным пользователям</font>
+    <br/><br/>
+    <form action="{% url 'send_email_to_every_user' %}" method="post" style="color:#7f7f7f">
+        {% csrf_token %}
+        {% for field in form %}
+        {{ field.errors }}
+        <div class="form-group">
+            {{ field.label }}
+        </div>
+        <div class="form-group">
+            {{ field }}
+        </div>
+        {% endfor %}
+        <input type="submit" value="Отправить" class="btn btn-secondary my-5" />
+    </form>
+
+</div>
+{% endblock content %}
